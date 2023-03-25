@@ -1,0 +1,23 @@
+.auth-container {
+    max-width: 600px;
+    margin: 25vh auto 0;
+    background-color: #fff;
+
+    .auth-title h2 {
+        font-size: 1.25em;
+        padding: 15px 20px;
+    }
+
+    .auth-title hr {
+        border: 1px solid #f0f2f5;
+    }
+
+    form {
+        padding: 20px;
+    }
+
+    button {
+        border-radius: 0;
+        padding: 5px 60px;
+    }
+}

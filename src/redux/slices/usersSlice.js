@@ -4,6 +4,8 @@ const usersSlice = createSlice({
     name: "users",
     initialState: {
         users: [],
+        user: {},
+        isAuth: false,
         authError: "",
     },
     reducers: {
@@ -15,6 +17,10 @@ const usersSlice = createSlice({
         getUsersFailure: (state, action) => {
             state.authError = action.payload;
         },
+        authSuccess: (state, action) => {
+            state.user = action.payload;
+            state.isAuth = true;
+        },
     },
 });
 
@@ -22,6 +28,7 @@ export const {
     getUsersFetch,
     getUsersSuccess,
     getUsersFailure,
+    authSuccess,
 } = usersSlice.actions;
 
 export default usersSlice.reducer;

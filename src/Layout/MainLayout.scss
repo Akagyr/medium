@@ -1,0 +1,41 @@
+.layout {
+    .header {
+        position: sticky;
+        height: 50px;
+        top: 0;
+        z-index: 1;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        line-height: 0;
+        align-items: center;
+
+        .logo {
+            h2 {
+                color: #fff;
+            }
+        }
+
+        .user-account {
+            color: #fff;
+            text-align: center;
+            display: flex;
+            align-items: center;
+
+            img {
+                width: 35px;
+                background-color: #fff;
+                border-radius: 50%;
+                margin-right: 15px;
+            }
+
+            p {
+                color: #fff;
+            }
+        }
+    }
+
+    .content {
+        padding: 0 50px;
+    }
+}

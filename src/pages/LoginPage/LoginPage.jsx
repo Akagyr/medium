@@ -1,47 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { Button, Checkbox, Form, Input, message } from "antd";
-import "./Auth.scss";
+import { Button, Checkbox, Form, Input } from "antd";
+import "./LoginPage.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { getUsersFetch, authSuccess } from "../../redux/slices/usersSlice";
+import { login } from "../../redux/actions/loginActions";
+import MessageError from "../../components/MessageError";
 
-const Auth = () => {
+const LoginPage = () => {
+    const { isAuth } = useSelector(state => state.login);
     const [checked, setChecked] = useState(true);
-    const { users } = useSelector(state => state.users);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [messageApi, contextHolder] = message.useMessage();
 
     useEffect(() => {
-        dispatch(getUsersFetch());
-    }, [dispatch]);
-
-    const authError = () => {
-        messageApi.open({
-            type: "error",
-            content: "Invalid username or password",
-        });
-    };
-
-    const onFinish = (values) => {
-        let user = users.find(item => {
-            return item.id === values.username && item.password === values.password;
-        });
-        if(!user) {
-            authError();
-        } else if(Object.keys(user).length) {
-            if(checked) {
-                window.localStorage.setItem("user", JSON.stringify(user));
-            }
-            dispatch(authSuccess(user));
+        if(isAuth) {
             navigate("../");
         }
+    }, [isAuth]);
+
+    const onFinish = (values) => {
+        dispatch(login(values));
     };
 
     return (
         <>
-            {contextHolder}
+            <MessageError />
             <div className="auth-container">
                 <div className="auth-title">
                     <h2>Authorization</h2>
@@ -52,7 +36,7 @@ const Auth = () => {
                     labelCol={{ span: 4 }}
                     wrapperCol={{ span: 20 }}
                     onFinish={onFinish}
-                    autoComplete="off"
+                    // autoComplete="off"
                 >
                     <Form.Item
                         label="Username"
@@ -80,8 +64,9 @@ const Auth = () => {
                     </Form.Item>
                     <Checkbox 
                         checked={checked}
-                        onChange={(e) => setChecked(e.target.checked)}
-                    >Remember me</Checkbox>
+                        onChange={(e) => setChecked(e.target.checked)}>
+                            Remember me
+                    </Checkbox>
                     <Form.Item wrapperCol={{ offset: 8 }}>
                         <Button type="primary" htmlType="submit">
                             Log in
@@ -93,4 +78,4 @@ const Auth = () => {
     );
 }
 
-export default Auth;
+export default LoginPage;

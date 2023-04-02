@@ -1,0 +1,67 @@
+.back-home-btn {
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.ant-carousel {
+    .slide-image img {
+        width: 100%;
+        height: 350px;
+    }
+}
+
+.room-info{
+    padding-left: 20px;
+
+    h2 {
+        text-decoration: underline;
+    }
+    
+    p {
+        margin-top: 10px;
+    }
+}
+
+.check-btns {
+    text-align: right;
+
+    button{
+        &:first-child {
+            color: #a6a6a6;
+        }
+    
+        &:last-child {
+        margin: 0 15px;
+        }
+    }
+}
+
+.room-features {
+    margin-top: 10px;
+
+    h4 {
+        margin-bottom: 15px;
+    }
+
+    p {
+        margin-top: 5px;
+
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+}
+
+.room-description {
+    margin-top: 70px;
+}
+
+:where(.css-dev-only-do-not-override-mxhywb).ant-col-2 {
+    flex: 0 0 6%;
+    max-width: 6%;
+}
+:where(.css-dev-only-do-not-override-mxhywb).ant-col-22 {
+    flex: 0 0 94%;
+    max-width: 94%;
+}
+

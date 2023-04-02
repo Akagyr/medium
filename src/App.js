@@ -1,15 +1,15 @@
 import { Routes, Route } from "react-router-dom";
 
 import "./App.scss";
-import MainLayout from "./Layout/MainLayout";
-import Auth from "./pages/Auth/Auth";
+import MainLayout from "./layout/MainLayout";
+import LoginPage from "./pages/LoginPage/LoginPage";
 
 function App() {
 
   return (
     <Routes>
-      <Route index element={<MainLayout />} />
-      <Route path="auth" element={<Auth />} />
+      <Route path="/*" element={<MainLayout />} />
+      <Route path="login" element={<LoginPage />} />
     </Routes>
   );
 }

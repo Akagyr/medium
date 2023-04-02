@@ -4,6 +4,7 @@ const roomsSlice = createSlice({
     name: "rooms",
     initialState: {
         rooms: [],
+        room: {},
         isLoading: false,
         fetchError: "",
     },
@@ -19,6 +20,9 @@ const roomsSlice = createSlice({
             state.fetchError = action.payload;
             state.isLoading = false;
         },
+        selectRoom: (state, action) => {
+            state.room = state.rooms.find(num => num.number === action.payload);
+        },
     },
 });
 
@@ -26,6 +30,7 @@ export const {
     getRoomsFetch,
     getRoomsSuccess,
     getRoomsFailure,
+    selectRoom,
 } = roomsSlice.actions;
 
 export default roomsSlice.reducer;

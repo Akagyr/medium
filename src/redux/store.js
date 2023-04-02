@@ -2,7 +2,7 @@ import createSagaMiddleware from "@redux-saga/core";
 import { configureStore } from "@reduxjs/toolkit";
 
 import roomsReducer from "./slices/roomsSlice";
-import usersReducer from "./slices/usersSlice";
+import loginReducer from "./slices/loginSlice";
 
 import rootSaga from "./sagas/rootSaga";
 
@@ -10,7 +10,7 @@ const sagaMiddleware = createSagaMiddleware();
 export const store = configureStore({
     reducer: {
         rooms: roomsReducer,
-        users: usersReducer,
+        login: loginReducer,
     },
     middleware: [sagaMiddleware],
 });

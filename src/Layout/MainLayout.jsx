@@ -1,40 +1,54 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-import { Breadcrumb, Layout } from "antd";
+import { Layout } from "antd";
 import "./MainLayout.scss";
-import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Route, Routes, Link, useNavigate } from "react-router-dom";
+
+import RoomsTablePage from "../pages/RoomsTablePage/RoomsTablePage";
+import SingleRoomPage from "../pages/SingleRoomPage/SingleRoomPage";
+import { loginSuccess, logOut } from "../redux/slices/loginSlice";
 
 const { Header, Content } = Layout;
 
 const MainLayout = () => {
-    const { isAuth, user } = useSelector(state => state.users);
+    const { isAuth, user } = useSelector(state => state.login);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if(!isAuth && !localStorage.getItem("user")) {
+            navigate("../login");
+        } else {
+            dispatch(loginSuccess(JSON.parse(localStorage.getItem("user"))));
+        }
+    }, [isAuth]);
 
     return (
-        <>
-            {!isAuth && <Navigate to="auth" />}
-            <Layout className="layout">
-                <Header className="header">
-                    <div className="logo">
+        <Layout className="layout">
+            <Header className="header">
+                <div className="logo">
+                    <Link to="/">
                         <h2>HOTEL</h2>
-                    </div>
-                    <div className="user-account">
-                        <img 
-                            src={user.image 
-                                ? user.image 
-                                : "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
-                                } 
-                            alt="icon-user" />
-                        <p>Log out</p>
-                    </div>
-                </Header>
-                <Content className="content">
-                    <Breadcrumb style={{ margin: "16px 0" }}>
-                    </Breadcrumb>
-                    <div style={{ padding: 24, minHeight: 380, background: "white"}}>Content</div>
-                </Content>
-            </Layout>
-        </>
+                    </Link>
+                </div>
+                <div className="user-account">
+                    <img 
+                        src={user.image 
+                            ? user.image 
+                            : "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
+                            } 
+                        alt="icon-user" />
+                    <p onClick={() => dispatch(logOut())}>Log out</p>
+                </div>
+            </Header>
+            <Content className="content">
+                <Routes>
+                    <Route index element={<RoomsTablePage />} />
+                    <Route path="rooms/:roomId" element={<SingleRoomPage />} />
+                </Routes>
+            </Content>
+        </Layout>
     );
 }
 

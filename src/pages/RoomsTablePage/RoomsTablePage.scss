@@ -1,0 +1,23 @@
+.rooms-filters {
+    margin-bottom: 40px;
+
+    button {
+        border-radius: 0;
+        margin-right: 20px;
+    }
+}
+
+.rooms-list {
+    .more-info-btn{
+        border-radius: 0;
+    }
+    
+    :where(.css-dev-only-do-not-override-mxhywb).ant-table-wrapper .ant-table-pagination-right {
+        justify-content: center;
+    
+        li {
+            background-color: #fff;
+        }
+    }
+}
+

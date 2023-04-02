@@ -13,6 +13,11 @@
         .logo {
             h2 {
                 color: #fff;
+                transition: .2s;
+
+                &:hover {
+                    color: #1878FF;
+                }
             }
         }
 
@@ -31,11 +36,17 @@
 
             p {
                 color: #fff;
+                transition: .2s;
+                cursor: pointer;
+
+                &:hover {
+                    color: #1878FF;
+                }
             }
         }
     }
 
     .content {
-        padding: 0 50px;
+        padding: 20px 50px 0;
     }
 }

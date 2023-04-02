@@ -1,12 +1,12 @@
 import { all, call } from "redux-saga/effects";
 
 import roomsSaga from "./roomsSaga";
-import usersSaga from "./usersSaga";
+import loginSaga from "./loginSaga";
 
 function* rootSaga() {
     yield all([
         call(roomsSaga),
-        call(usersSaga),
+        call(loginSaga),
     ]);
 }
 

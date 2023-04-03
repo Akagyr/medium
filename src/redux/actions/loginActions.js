@@ -1,8 +1,15 @@
-import { LOG_IN } from "../actionTypes/loginActionTypes";
+import { LOG_IN, SIGN_UP } from "../actionTypes/loginActionTypes";
 
-export const login = (user) => {
+export const login = (userData) => {
     return {
         type: LOG_IN,
-        payload: user,
+        payload: userData,
+    };
+};
+
+export const signup = (userData) => {
+    return {
+        type: SIGN_UP,
+        payload: userData,
     };
 };

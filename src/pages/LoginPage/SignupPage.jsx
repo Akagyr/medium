@@ -1,34 +1,35 @@
-import React, { useEffect, useState } from "react";
-import { Button, Checkbox, Form, Input } from "antd";
-import "./LoginPage.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Button, Form, Input } from "antd";
+import { LeftOutlined } from "@ant-design/icons";
+import "../LoginPage/LoginPage.scss";
+import { useDispatch, useSelector} from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
-import { login } from "../../redux/actions/loginActions";
 import MessageError from "../../components/MessageError";
+import { signup } from "../../redux/actions/loginActions";
 
-const LoginPage = () => {
-    const { isAuth } = useSelector(state => state.login);
-    const [checked, setChecked] = useState(true);
+
+const SignupPage = () => {
+    const { isSignupSuccess } = useSelector(state => state.login);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if(isAuth) {
-            navigate("../");
-        }
-    }, [isAuth]);
-
     const onFinish = (values) => {
-        dispatch(login(values));
+        dispatch(signup(values));
     };
+
+    useEffect(() => {
+        if(isSignupSuccess) {
+            navigate("../login");
+        }
+    }, [isSignupSuccess]);
 
     return (
         <>
             <MessageError />
             <div className="auth-container">
                 <div className="auth-title">
-                    <h2>Authorization</h2>
+                    <h2>Sign up</h2>
                     <hr />
                 </div>
                 <Form 
@@ -61,17 +62,14 @@ const LoginPage = () => {
                     >
                         <Input.Password />
                     </Form.Item>
-                    <Checkbox 
-                        checked={checked}
-                        onChange={(e) => setChecked(e.target.checked)}>
-                            Remember me
-                    </Checkbox>
-                    <div className="signup-link">
-                        <p>Do not account? <Link to="../signup">Signup now</Link></p>
-                    </div>
-                    <div className="login-btn">
+                    <div className="signup-btn">
+                        <Button htmlType="submit">
+                            <Link to="../login">
+                                <LeftOutlined /> Back to login
+                            </Link>
+                        </Button>
                         <Button type="primary" htmlType="submit">
-                            Log in
+                            Sign up
                         </Button>
                     </div>
                 </Form>
@@ -80,4 +78,4 @@ const LoginPage = () => {
     );
 }
 
-export default LoginPage;
+export default SignupPage;

@@ -6,6 +6,8 @@ const loginSlice = createSlice({
         user: {},
         isAuth: false,
         authError: "",
+        signupError: "",
+        isSignupSuccess: false,
     },
     reducers: {
         loginSuccess: (state, action) => {
@@ -15,12 +17,19 @@ const loginSlice = createSlice({
         loginFailure: (state, action) => {
             state.authError = action.payload;
         },
+        singupSuccess: (state) => {
+            state.isSignupSuccess = true;
+        },
+        singupFailure: (state, action) => {
+            state.signupError = action.payload;
+        },
         logOut: (state) => {
             state.isAuth = false;
             window.localStorage.removeItem("user");
         },
-        clearAuthError: (state) => {
-            state.isAuth = "";
+        clearErrors: (state) => {
+            state.authError = "";
+            state.signupError = "";
         },
     },
 });
@@ -28,8 +37,10 @@ const loginSlice = createSlice({
 export const {
     loginSuccess,
     loginFailure,
+    singupSuccess,
+    singupFailure,
     logOut,
-    clearAuthError,
+    clearErrors,
 } = loginSlice.actions;
 
 export default loginSlice.reducer;

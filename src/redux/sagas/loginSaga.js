@@ -7,9 +7,9 @@ import { loginSuccess, loginFailure } from "../slices/loginSlice";
 
 
 function* loginSagaFetcher(action) {
-    const { username, password } = action.payload;
+    const { email, password } = action.payload;
     try {
-        const data = yield signInWithEmailAndPassword(auth, username, password);
+        const data = yield signInWithEmailAndPassword(auth, email, password);
         window.localStorage.setItem("user", JSON.stringify(data.user));
         yield put(loginSuccess(data.user));
     } catch(e) {

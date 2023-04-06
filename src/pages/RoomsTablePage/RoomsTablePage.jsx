@@ -1,37 +1,41 @@
 import React, { useEffect, useState } from "react";
 import { Button, Checkbox, Table } from "antd";
-import "./RoomsTablePage.scss";
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-import { getRoomsFetch, selectRoom } from "../../redux/slices/roomsSlice";
+import "./RoomsTablePage.scss";
+import useRooms from "../../hook/useRooms";
+import Preloader from "../../components/Preloader/Preloader";
 
 const RoomsTablePage = () => {
-    const { rooms } = useSelector(state => state.rooms);
+    const rooms = useRooms();
+    const { isRoomsLoading } = useSelector(state => state.rooms);
     const [filteredInfo, setFilteredInfo] = useState({});
     const [sortedInfo, setSortedInfo] = useState({});
     const [checkedFreeRooms, setCheckedFreeRooms] = useState(false);
-    const typeDataFilter = Array.from(new Set(rooms.map(item => item.type)));
-    const occupancyDataFilter = Array.from(new Set(rooms.map(item => item.occupancy)));
-    const guestDataFilter = Array.from(new Set(rooms.map(item => item.guest))).filter(item => item !== "");
-    const data = rooms.map(item => {
-        return {
-            key: item.number,
-            number: item.number,
-            type: item.type,
-            occupancy: item.occupancy,
-            price: item.price,
-            guest: item.guest,
-        };
-    });
-
-    const dispatch = useDispatch();
+    const [typeDataFilter, setTypeDataFilter] = useState([]);
+    const [occupancyDataFilter, setOccupancyDataFilter] = useState([]);
+    const [guestDataFilter, setGuestDataFilter] = useState([]);
+    const [dataTable, setDataTable] = useState([]);
 
     useEffect(() => {
-        if(rooms.length === 0) {
-            dispatch(getRoomsFetch());
+        if(rooms.length !== 0) {
+            setTypeDataFilter(Array.from(new Set(rooms.map(item => item.type))));
+            setOccupancyDataFilter(Array.from(new Set(rooms.map(item => item.occupancy))));
+            setGuestDataFilter(Array.from(new Set(rooms.map(item => item.guest))).filter(item => item !== ""));
+            setDataTable(rooms.map(item => {
+                return {
+                    key: item.id,
+                    id: item.id,
+                    number: item.number,
+                    type: item.type,
+                    occupancy: item.occupancy,
+                    price: item.price,
+                    guest: item.guest,
+                };
+            }));
         }
-    }, []);
+    }, [rooms]);
 
     const handleChange = (pagination, filters, sorter) => {
         setFilteredInfo(filters);
@@ -100,7 +104,7 @@ const RoomsTablePage = () => {
             dataIndex: "button",
             render: (_, record) => (
                 <Button className="more-info-btn" type="primary">
-                    <Link to={`rooms/${record.number}`} onClick={() => dispatch(selectRoom(record.number))}>
+                    <Link to={`rooms/${record.id}`}>
                         More information
                     </Link>
                 </Button>
@@ -111,21 +115,25 @@ const RoomsTablePage = () => {
 
     return (
         <>
-            <div className="rooms-filters">
-                <Button type="primary" onClick={clearAll}>Clear all filters</Button>
-                <Checkbox 
-                    checked={checkedFreeRooms}
-                    onChange={(e) => setCheckedFreeRooms(e.target.checked)}>
-                        Free rooms only
-                </Checkbox>
-            </div>
-            <div className="rooms-list">
-                <Table 
-                    columns={columns} 
-                    dataSource={checkedFreeRooms ? data.filter(item => item.guest === "") : data} 
-                    onChange={handleChange}
-                />
-            </div>
+            { isRoomsLoading
+            ?<Preloader />
+            :<>
+                <div className="rooms-filters">
+                    <Button type="primary" onClick={clearAll}>Clear all filters</Button>
+                    <Checkbox 
+                        checked={checkedFreeRooms}
+                        onChange={(e) => setCheckedFreeRooms(e.target.checked)}>
+                            Free rooms only
+                    </Checkbox>
+                </div>
+                <div className="rooms-list">
+                    <Table 
+                        columns={columns} 
+                        dataSource={checkedFreeRooms ? dataTable.filter(item => item.guest === "") : dataTable} 
+                        onChange={handleChange}
+                    />
+                </div>
+            </>}
         </>
     );
 }

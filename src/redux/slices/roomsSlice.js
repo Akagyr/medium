@@ -4,24 +4,20 @@ const roomsSlice = createSlice({
     name: "rooms",
     initialState: {
         rooms: [],
-        room: {},
-        isLoading: false,
+        isRoomsLoading: false,
         fetchError: "",
     },
     reducers: {
         getRoomsFetch: (state) => {
-            state.isLoading = true;
+            state.isRoomsLoading = true;
         },
         getRoomsSuccess: (state, action) => {
             state.rooms = action.payload;
-            state.isLoading = false;
+            state.isRoomsLoading = false;
         },
         getRoomsFailure: (state, action) => {
             state.fetchError = action.payload;
-            state.isLoading = false;
-        },
-        selectRoom: (state, action) => {
-            state.room = state.rooms.find(num => num.number === action.payload);
+            state.isRoomsLoading = false;
         },
     },
 });
@@ -30,7 +26,6 @@ export const {
     getRoomsFetch,
     getRoomsSuccess,
     getRoomsFailure,
-    selectRoom,
 } = roomsSlice.actions;
 
 export default roomsSlice.reducer;

@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
-
 import { Layout } from "antd";
-import "./MainLayout.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes, Link, useNavigate } from "react-router-dom";
 
+import "./MainLayout.scss";
 import RoomsTablePage from "../pages/RoomsTablePage/RoomsTablePage";
 import SingleRoomPage from "../pages/SingleRoomPage/SingleRoomPage";
 import { loginSuccess, logOut } from "../redux/slices/loginSlice";

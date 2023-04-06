@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { Button, Form, Input } from "antd";
 import { LeftOutlined } from "@ant-design/icons";
-import "../LoginPage/LoginPage.scss";
 import { useDispatch, useSelector} from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
+import "../LoginPage/LoginPage.scss";
 import MessageError from "../../components/MessageError";
 import { signup } from "../../redux/actions/loginActions";
 
